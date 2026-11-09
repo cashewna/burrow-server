@@ -124,6 +124,14 @@ const run = async () => {
   const rp = await a.nextXt("rp");
   assert.deepStrictEqual(rp.slice(1, 4), [roomId, "jamaa_township.room_main", "0"]);
 
+  // the desktop client joins twice on arrival (arrival, then travel). Asking
+  // for the room it is already in still has to be answered, or the second
+  // join waits for a reply that never comes.
+  a.xt("rj", roomId, "jamaa_township.room_main#1", 1, 0, 0);
+  const again = await a.nextXt("rj");
+  assert.deepStrictEqual([again[2], again[4]], ["1", roomId]);
+  await a.nextXt("rp");
+
   a.xt("ad", roomId, "Alice", 1, 1);
   const ad = await a.nextXt("ad");
   assert.strictEqual(ad[2], "Alice");
