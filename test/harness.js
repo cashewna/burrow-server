@@ -105,9 +105,10 @@ class GameClient {
         continue;
       }
       // the chat filter settings ("xfl", after every login), the one-time
-      // question which filter to use ("xfa", on the first room) and the
-      // buddy list with when each was last seen ("bl", "xls": at login) come unasked.
-      if ((fields[0] === "xfl" || fields[0] === "xfa" || fields[0] === "bl" || fields[0] === "xls") && cmd !== fields[0]) {
+      // question which filter to use ("xfa", on the first room), the buddy
+      // list with when each was last seen ("bl", "xls": at login), and a den
+      // owner's count of who is inside ("drc") come unasked.
+      if ((fields[0] === "xfl" || fields[0] === "xfa" || fields[0] === "bl" || fields[0] === "xls" || fields[0] === "drc") && cmd !== fields[0]) {
         continue;
       }
       if (this.unasked(fields)) {

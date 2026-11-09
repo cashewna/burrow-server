@@ -279,7 +279,7 @@ const run = async () => {
   // the den shop inside a den is a "combined" list: kinds, counts, entries.
   a.xt("gl", denId, 384);
   const denRoomShop = await a.nextXt("gl");
-  assert.deepStrictEqual(denRoomShop.slice(3, 5).concat(denRoomShop[9]), ["1060", "", "1040"]);
+  assert.deepStrictEqual(denRoomShop.slice(3, 5).concat(denRoomShop[9]), ["1060", "9000013", "1040"]);
   assert.ok(Number(denRoomShop[8]) > 50 && denRoomShop[8] === denRoomShop[10] && Number(denRoomShop[10]) === denRoomShop.length - 11);
 
   a.xt("gl", denId, 5);
@@ -597,14 +597,14 @@ const run = async () => {
   // clothing item, 3457 a den item and 3436 a den room.
   a.xt("gl", denId, 415); // the Diamond Shop's clothing
   const diamondShop = await a.untilXt("gl");
-  assert.deepStrictEqual(diamondShop.slice(3, 5), ["1054", ""]);
+  assert.deepStrictEqual(diamondShop.slice(3, 5), ["1054", "9000015"]);
   assert.ok(Number(diamondShop[8]) > 20 && Number(diamondShop[8]) === diamondShop.length - 9);
   a.xt("gl", denId, 293);
-  assert.deepStrictEqual((await a.untilXt("gl")).slice(3, 9), ["1054", "", "0", "0", "0", "0"]);
+  assert.deepStrictEqual((await a.untilXt("gl")).slice(3, 9), ["1054", "9000015", "0", "0", "0", "0"]);
   // A shop nothing is known of has empty shelves, whatever its kind.
-  for (const [unknownShop, kind] of [[390, "1030"], [338, "1000"], [796, "1054"]]) {
+  for (const [unknownShop, kind, title] of [[390, "1030", "9000011"], [338, "1000", "9000010"], [796, "1054", "9000015"]]) {
     a.xt("gl", denId, unknownShop);
-    assert.deepStrictEqual((await a.untilXt("gl")).slice(3, 9), [kind, "", "0", "0", "0", "0"]);
+    assert.deepStrictEqual((await a.untilXt("gl")).slice(3, 9), [kind, title, "0", "0", "0", "0"]);
   }
   a.xt("gl", denId, 794);
   assert.deepStrictEqual((await a.untilXt("gl")).slice(8), ["1", "1030", "0"]);
